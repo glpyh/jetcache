@@ -10,20 +10,28 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "jetcache")
 public class JetCacheProperties {
 
-    private String[] hidePackages;
+    private String[] hiddenPackages;
     private int statIntervalMinutes;
     private boolean areaInCacheName = true;
     private boolean penetrationProtect = false;
+    private boolean enableMethodCache = true;
 
     public JetCacheProperties(){
     }
 
-    public String[] getHidePackages() {
-        return hidePackages;
+    public String[] getHiddenPackages() {
+        // keep same with GlobalCacheConfig
+        return hiddenPackages;
+    }
+
+    public void setHiddenPackages(String[] hiddenPackages) {
+        // keep same with GlobalCacheConfig
+        this.hiddenPackages = hiddenPackages;
     }
 
     public void setHidePackages(String[] hidePackages) {
-        this.hidePackages = hidePackages;
+        // keep same with GlobalCacheConfig
+        this.hiddenPackages = hidePackages;
     }
 
     public int getStatIntervalMinutes() {
@@ -48,5 +56,13 @@ public class JetCacheProperties {
 
     public void setPenetrationProtect(boolean penetrationProtect) {
         this.penetrationProtect = penetrationProtect;
+    }
+
+    public boolean isEnableMethodCache() {
+        return enableMethodCache;
+    }
+
+    public void setEnableMethodCache(boolean enableMethodCache) {
+        this.enableMethodCache = enableMethodCache;
     }
 }

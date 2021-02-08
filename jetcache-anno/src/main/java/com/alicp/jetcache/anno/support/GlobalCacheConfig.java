@@ -5,8 +5,6 @@ package com.alicp.jetcache.anno.support;
 
 import com.alicp.jetcache.CacheBuilder;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.util.Map;
 
 /**
@@ -18,35 +16,12 @@ public class GlobalCacheConfig {
     protected int statIntervalMinutes;
     private boolean areaInCacheName = true;
     private boolean penetrationProtect = false;
+    private boolean enableMethodCache = true;
 
     private Map<String, CacheBuilder> localCacheBuilders;
     private Map<String, CacheBuilder> remoteCacheBuilders;
 
-    private ConfigProvider configProvider = new SpringConfigProvider();
-
-    private CacheContext cacheContext;
-
     public GlobalCacheConfig() {
-    }
-
-    @PostConstruct
-    public synchronized void init() {
-        if (cacheContext == null) {
-            cacheContext = configProvider.newContext(this);
-            cacheContext.init();
-        }
-    }
-
-    @PreDestroy
-    public synchronized void shutdown() {
-        if (cacheContext != null) {
-            cacheContext.shutdown();
-            cacheContext = null;
-        }
-    }
-
-    public CacheContext getCacheContext() {
-        return cacheContext;
     }
 
     public String[] getHiddenPackages() {
@@ -81,14 +56,6 @@ public class GlobalCacheConfig {
         this.statIntervalMinutes = statIntervalMinutes;
     }
 
-    public ConfigProvider getConfigProvider() {
-        return configProvider;
-    }
-
-    public void setConfigProvider(ConfigProvider configProvider) {
-        this.configProvider = configProvider;
-    }
-
     public boolean isAreaInCacheName() {
         return areaInCacheName;
     }
@@ -103,5 +70,13 @@ public class GlobalCacheConfig {
 
     public void setPenetrationProtect(boolean penetrationProtect) {
         this.penetrationProtect = penetrationProtect;
+    }
+
+    public boolean isEnableMethodCache() {
+        return enableMethodCache;
+    }
+
+    public void setEnableMethodCache(boolean enableMethodCache) {
+        this.enableMethodCache = enableMethodCache;
     }
 }
